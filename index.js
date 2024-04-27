@@ -30,6 +30,12 @@ async function run() {
 
     const addItemCollection = client.db('paintingHouseDB').collection('items');
 
+    app.get('/addItems', async (req, res) => {
+        const cursor = addItemCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
     app.post('/addItem', async (req, res) => {
         const newItem = req.body;
         console.log(newItem);
