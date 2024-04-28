@@ -43,6 +43,17 @@ async function run() {
         res.send(result);
     })
 
+    app.get('/myArts/:email', async (req, res) => {
+        // console.log(req.params.email);
+        // const result = await addItemCollection.find({ email: req.params.email }).toArray();
+        // res.send(result);
+        const query = { user_email: req.params.email };
+        // const cursor = addItemCollection.find({ query: req.params.query });
+        const cursor = addItemCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
     app.post('/addItem', async (req, res) => {
         const newItem = req.body;
         console.log(newItem);
