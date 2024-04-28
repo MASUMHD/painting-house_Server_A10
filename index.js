@@ -43,16 +43,52 @@ async function run() {
         res.send(result);
     })
 
+    app.put('/addItems/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await addItemCollection.findOne(query);
+        res.send(result);
+    })
+
+    app.put('/addItems/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const options = { upsert: true };
+        const updateDoc = req.body;
+        const update = {
+            $set: {
+                item_name: updateDoc.item_name,
+        subcategory_name: updateDoc.subcategory_name,
+      short_description: updateDoc.short_description,
+      customization: updateDoc.customization,
+      stockStatus: updateDoc.stockStatus,
+      imageURL: updateDoc.imageURL,
+      price: updateDoc.price,
+      rating: updateDoc.rating,
+      processing_time: updateDoc.processing_time,
+            },
+        };
+        const result = await addItemCollection.updateOne(filter, update, options);
+        res.send(result);
+    })
+
+    app.delete('/addItems/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) };
+        const result = await addItemCollection.deleteOne(query);
+        res.send(result);
+    })
+
     app.get('/myArts/:email', async (req, res) => {
-        // console.log(req.params.email);
-        // const result = await addItemCollection.find({ email: req.params.email }).toArray();
-        // res.send(result);
         const query = { user_email: req.params.email };
-        // const cursor = addItemCollection.find({ query: req.params.query });
         const cursor = addItemCollection.find(query);
         const result = await cursor.toArray();
         res.send(result);
     })
+
+    // app.get('/singleArts/:id', async (req, res) => {
+
+    // })
 
     app.post('/addItem', async (req, res) => {
         const newItem = req.body;
