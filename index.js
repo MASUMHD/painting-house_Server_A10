@@ -50,7 +50,7 @@ async function run() {
     //     res.send(result);
     // })
 
-    
+
 
     app.put('/addItems/:id', async (req, res) => {
         const id = req.params.id;
@@ -84,6 +84,13 @@ async function run() {
 
     app.get('/myArts/:email', async (req, res) => {
         const query = { user_email: req.params.email };
+        const cursor = addItemCollection.find(query);
+        const result = await cursor.toArray();
+        res.send(result);
+    })
+
+    app.get('/my/:category', async (req, res) => {
+        const query = { subcategory_name: req.params.category };
         const cursor = addItemCollection.find(query);
         const result = await cursor.toArray();
         res.send(result);
