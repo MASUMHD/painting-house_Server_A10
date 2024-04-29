@@ -43,12 +43,14 @@ async function run() {
         res.send(result);
     })
 
-    app.put('/addItems/:id', async (req, res) => {
-        const id = req.params.id;
-        const query = {_id: new ObjectId(id)};
-        const result = await addItemCollection.findOne(query);
-        res.send(result);
-    })
+    // app.put('/addItems/:id', async (req, res) => {
+    //     const id = req.params.id;
+    //     const query = {_id: new ObjectId(id)};
+    //     const result = await addItemCollection.findOne(query);
+    //     res.send(result);
+    // })
+
+    
 
     app.put('/addItems/:id', async (req, res) => {
         const id = req.params.id;
@@ -70,6 +72,7 @@ async function run() {
         };
         const result = await addItemCollection.updateOne(filter, update, options);
         res.send(result);
+        console.log(result);
     })
 
     app.delete('/addItems/:id', async (req, res) => {
